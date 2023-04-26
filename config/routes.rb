@@ -6,10 +6,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :customers do
         resources :reservations, only: [:index, :show, :create, :destroy, :update]
+        resources :courts, only: [:index, :show]
       end
-
-      # This can be kept here or move to admin namespace when it is created
-      resources :courts, only: [:index, :show, :create, :destroy, :update]
     end
   end
 
