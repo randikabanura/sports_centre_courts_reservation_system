@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_26_070742) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_26_120525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "courts", force: :cascade do |t|
+    t.string "name"
+    t.integer "court_type", default: 0
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "customers", force: :cascade do |t|
     t.string "provider", default: "email", null: false
@@ -42,4 +50,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_070742) do
     t.index ["uid", "provider"], name: "index_customers_on_uid_and_provider", unique: true
   end
 
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.bigint "court_id", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.boolean "canceled", default: false
+    t.text "notes", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["court_id"], name: "index_reservations_on_court_id"
+    t.index ["customer_id"], name: "index_reservations_on_customer_id"
+  end
+
+  add_foreign_key "reservations", "courts"
+  add_foreign_key "reservations", "customers"
 end
