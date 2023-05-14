@@ -197,7 +197,7 @@ $ rails db:create
 # This creates tables etc. on the database
 $ rails db:migrate
 
-# This add essential data to the sytem
+# This add essential data to the system
 $ rails db:seed
 ```
 
