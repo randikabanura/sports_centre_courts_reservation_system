@@ -13,8 +13,8 @@ class Court < ApplicationRecord
     reservation_service = V1::Customers::ReservationsService.new(court_id: id)
     reservations = reservation_service.get_reservations(date: date, canceled: false).pluck(:start_time).map(&:hour)
 
-    start_hour = DateTime.parse(options[:start_time]).map(&:hour) rescue 0
-    end_hour = DateTime.parse(options[:end_time]).map(&:hour) rescue 23
+    start_hour = DateTime.parse(options[:start_time]).hour rescue 0
+    end_hour = DateTime.parse(options[:end_time]).hour rescue 23
     selected_hours = (start_hour..end_hour)
 
     available_reservations = []

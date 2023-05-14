@@ -51,14 +51,17 @@ class V1::Customers::ReservationsService
     reservations_by_date = {}
     array_of_dates = []
     array_of_dates << DateTime.parse(options[:date].to_s).change(offset: '0' ).to_date if options[:date].present?
-    array_of_dates << (Date.today..(Date.today + 7.days)) if array_of_dates.empty?
+    array_of_dates << (Date.today..(Date.today + 7.days)).to_a if array_of_dates.empty?
+    array_of_dates.flatten!
 
     Court.active.each do |selected_court|
       next if court.present? && court != selected_court
       next if options[:court_type].present? && options[:court_type] != selected_court.court_type
 
       array_of_dates.each do |date|
-        reservations_by_date[date.to_s.to_sym] = selected_court.available_reservation_slots(date, **options)
+        reservations_by_date[date.to_s.to_sym] = [] if reservations_by_date[date.to_s.to_sym].blank?
+        reservations_by_date[date.to_s.to_sym] = reservations_by_date[date.to_s.to_sym] + selected_court.available_reservation_slots(date, **options)
+        reservations_by_date[date.to_s.to_sym] =  reservations_by_date[date.to_s.to_sym].flatten
       end
     end
 
@@ -74,7 +77,7 @@ class V1::Customers::ReservationsService
     conditions[:start_time] = DateTime.parse(date.to_s).change(offset: '0' ).all_day if date.present?
     conditions[:court] = court if court.present?
     conditions[:customer] = customer if customer.present?
-    conditions[:canceled] = options[:canceled] if options[:canceled].present?
+    conditions[:canceled] = options[:canceled] if [true, false].include? options[:canceled]
     conditions[:court][:court_type] = options[:court_type] if options[:court_type].present?
 
     Reservation.includes(:court).where(**conditions)
