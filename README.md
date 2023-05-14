@@ -9,6 +9,10 @@ The Sports Center Courts Reservation System is an API-only web application built
 - **Authentication and Authorization**: Customers can obtain an authentication token and include it in API requests to access protected endpoints, ensuring privacy and security. (Commented out to disable authentication for demo purposes. In a production environment, this line should be uncommented to enforce authentication.)
 - **Search and Filtering**: Customers can search for courts based on court type, availability, or specific criteria using appropriate API endpoints.
 
+## API Documentation
+The API endpoints and their usage are documented in the [Postman Collection](https://documenter.getpostman.com/view/7109068/2s93eePU9u). 
+Refer to this documentation to understand how to interact with the reservation system and make use of the available endpoints.
+
 ## Development Environment Setup (Prerequisites)
 
 ### Rails Installation (Windows)
@@ -51,8 +55,6 @@ Once you’re on the right page, click the **Download the installer** link.
 After the file has been download start the installation process by clicking on the .exe file.
 Continue clicking on Next button of the installer until the password reset page of the **postgres** user.
 Chose a password and continue hitting next. After all of those steps you will be able to install postgresql.
-
-
 
 ### Rails Installation (Linux)
 
@@ -127,6 +129,7 @@ $ rails -v
 # output
 $ Rails 6.0.3
 ```
+
 #### Install JavaScript Runtime
 
 Ruby on Rails framework requires JavaScript Runtime Environment (Node.js) to manage the features of Rails.
