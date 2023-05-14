@@ -6,7 +6,7 @@ The Sports Center Courts Reservation System is an API-only web application built
 
 - **Court Management**: Administrators can manage courts, including adding new courts, updating court information, and marking courts as active or inactive.
 - **Reservation Management**: Customers can view court availability, make reservations for specific dates and times, and manage their reservations (cancel or modify).
-- **Authentication and Authorization**: Customers can obtain an authentication token and include it in API requests to access protected endpoints, ensuring privacy and security. (Commented out to disable authentication for demo purposes. In a production environment, this line should be uncommented to enforce authentication.)
+- **Authentication and Authorization**: Customers can obtain an authentication token and include it in API requests to access protected endpoints, ensuring privacy and security. (***Commented out to disable authentication for demo purposes. In a production environment, authentication should be uncommented to enforce authentication.***)
 - **Search and Filtering**: Customers can search for courts based on court type, availability, or specific criteria using appropriate API endpoints.
 
 ## API Documentation
