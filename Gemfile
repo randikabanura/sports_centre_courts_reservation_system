@@ -49,6 +49,5 @@ end
 
 gem "devise"
 gem "devise_token_auth"
-gem "rswag"
 gem "humanize", "~> 2.5"
 gem "faker", "~> 3.2"

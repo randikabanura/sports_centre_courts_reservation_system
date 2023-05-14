@@ -19,7 +19,7 @@ class V1::Customers::ReservationsService
   end
 
   def update_reservation(id, start_time, notes = '')
-    _, reservation = get_a_reservation(id)
+    _, reservation = get_reservation(id)
     return [false, "Reservation update failed"] if reservation.blank?
 
     start_time = DateTime.parse(start_time).change(offset: '0').beginning_of_hour
@@ -30,11 +30,21 @@ class V1::Customers::ReservationsService
     [false, "Reservation update failed"]
   end
 
-  def get_a_reservation(id)
+  def get_reservation(id)
     reservation = Reservation.find(id)
     reservation.present? ? [true, reservation] : [false, "Reservation not found"]
   rescue StandardError => e
     [false, "Reservation not found"]
+  end
+
+  def cancel_reservation(id)
+    _, reservation = get_reservation(id)
+    return [false, "Reservation cancel failed"] if reservation.blank?
+
+    reservation.assign_attributes(canceled: true)
+    reservation.save ? [true, reservation] : [false, "Reservation cancel found"]
+  rescue StandardError => e
+    [false, "Reservation cancel found"]
   end
 
   def get_reservations(**options)
@@ -43,14 +53,15 @@ class V1::Customers::ReservationsService
 
     conditions[:start_time] = DateTime.parse(date.to_s).change(offset: '0' ).all_day if date.present?
     conditions[:court] = court if court.present?
-    conditions[:customer] =  customer if customer.present?
+    conditions[:customer] = customer if customer.present?
+    conditions[:canceled] = options[:canceled] if options[:canceled].present?
 
     Reservation.where(**conditions)
   end
 
   def already_reserved?(current_reservation_id, start_time)
     start_time = start_time.beginning_of_hour
-    reservations = get_reservations(date: start_time)
+    reservations = get_reservations(date: start_time, canceled: false)
     reservations.where(start_time: start_time).where.not(id: current_reservation_id).count.positive?
   end
 end

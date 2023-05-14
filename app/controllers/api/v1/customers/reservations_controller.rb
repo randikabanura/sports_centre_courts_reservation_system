@@ -2,9 +2,9 @@ class Api::V1::Customers::ReservationsController < ApplicationController
   # before_action :authenticate_customer!
 
   def index
-    court_id = params[:court_id]
+    court_id = index_reservation_params[:court_id]
     reservations_service = V1::Customers::ReservationsService.new(court_id: court_id)
-    @reservations = reservations_service.get_reservations(date: params[:date])
+    @reservations = reservations_service.get_reservations(date: index_reservation_params[:date])
     set_status(@reservations)
   end
 
@@ -25,11 +25,14 @@ class Api::V1::Customers::ReservationsController < ApplicationController
 
   def show
     reservations_service = V1::Customers::ReservationsService.new
-    @status, @data = reservations_service.get_a_reservation(params[:id])
+    @status, @data = reservations_service.get_reservation(params[:id])
   end
 
   def destroy
     id = params[:id]
+
+    reservations_service = V1::Customers::ReservationsService.new
+    @status, @data = reservations_service.cancel_reservation(id)
   end
 
   private
@@ -44,5 +47,9 @@ class Api::V1::Customers::ReservationsController < ApplicationController
 
   def update_reservation_params
     params.require(:reservation).permit(:start_time, :court_id, :notes)
+  end
+
+  def index_reservation_params
+    params.permit(:id, :date)
   end
 end

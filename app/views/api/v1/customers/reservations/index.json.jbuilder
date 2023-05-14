@@ -12,6 +12,6 @@ json.data do
       json.updated_at reservation.updated_at
     end
   else
-    json.message @data
+    json.message @reservations
   end
 end

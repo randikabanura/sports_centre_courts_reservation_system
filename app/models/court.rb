@@ -7,7 +7,7 @@ class Court < ApplicationRecord
   def available_reservation_slots(date)
     date = date.beginning_of_day
     reservation_service = V1::Customers::ReservationsService.new(court_id: id)
-    reservations = reservation_service.get_reservations(date: date).pluck(:start_time).map(&:hour)
+    reservations = reservation_service.get_reservations(date: date, canceled: false).pluck(:start_time).map(&:hour)
 
     available_reservations = []
     (0..23).each do |index|
