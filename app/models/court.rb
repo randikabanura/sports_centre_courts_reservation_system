@@ -8,6 +8,17 @@ class Court < ApplicationRecord
   validates_presence_of :name, :court_type, :active
   validates_inclusion_of :court_type, in: court_types.keys
 
+  # Retrieves available reservation slots for the court on the specified date.
+  # Params:
+  # - date: The date for which to retrieve available reservation slots
+  # - options: Additional options for filtering available reservation slots
+  # Returns:
+  # - An array of available reservation slots, each represented as a hash with the following keys:
+  #   - court_name: The name of the court
+  #   - court_id: The ID of the court
+  #   - court_type: The type of the court
+  #   - start_time: The start time of the reservation slot
+  #   - end_time: The end time of the reservation slot
   def available_reservation_slots(date, **options)
     date = date.beginning_of_day
     reservation_service = V1::Customers::ReservationsService.new(court_id: id)
