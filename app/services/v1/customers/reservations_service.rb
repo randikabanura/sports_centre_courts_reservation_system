@@ -47,6 +47,26 @@ class V1::Customers::ReservationsService
     [false, "Reservation cancel found"]
   end
 
+  def availability_reservations(**options)
+    reservations_by_date = {}
+    array_of_dates = []
+    array_of_dates << DateTime.parse(options[:date].to_s).change(offset: '0' ).to_date if options[:date].present?
+    array_of_dates << (Date.today..(Date.today + 7.days)) if array_of_dates.empty?
+
+    Court.active.each do |selected_court|
+      next if court.present? && court != selected_court
+      next if options[:court_type].present? && options[:court_type] != selected_court.court_type
+
+      array_of_dates.each do |date|
+        reservations_by_date[date.to_s.to_sym] = selected_court.available_reservation_slots(date, **options)
+      end
+    end
+
+    [true, reservations_by_date]
+  rescue StandardError => e
+    [false, "Reservations not found"]
+  end
+
   def get_reservations(**options)
     conditions = {}
     date = options[:date]
@@ -55,8 +75,9 @@ class V1::Customers::ReservationsService
     conditions[:court] = court if court.present?
     conditions[:customer] = customer if customer.present?
     conditions[:canceled] = options[:canceled] if options[:canceled].present?
+    conditions[:court][:court_type] = options[:court_type] if options[:court_type].present?
 
-    Reservation.where(**conditions)
+    Reservation.includes(:court).where(**conditions)
   end
 
   def already_reserved?(current_reservation_id, start_time)

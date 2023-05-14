@@ -2,9 +2,9 @@ class Api::V1::Customers::ReservationsController < ApplicationController
   # before_action :authenticate_customer!
 
   def index
-    court_id = index_reservation_params[:court_id]
-    reservations_service = V1::Customers::ReservationsService.new(court_id: court_id)
-    @reservations = reservations_service.get_reservations(date: index_reservation_params[:date])
+    reservations_service = V1::Customers::ReservationsService.new(court_id: index_reservation_params[:court_id])
+    @reservations = reservations_service.get_reservations(date: index_reservation_params[:date],
+                                                          canceled: index_reservation_params[:canceled])
     set_status(@reservations)
   end
 
@@ -35,6 +35,18 @@ class Api::V1::Customers::ReservationsController < ApplicationController
     @status, @data = reservations_service.cancel_reservation(id)
   end
 
+  def availability
+    options = {
+      date: availability_reservation_params[:date],
+      start_time: availability_reservation_params[:start_time],
+      end_time: availability_reservation_params[:end_time],
+      court_type: availability_reservation_params[:court_type]
+    }
+
+    reservations_service = V1::Customers::ReservationsService.new(court_id: availability_reservation_params[:court_id])
+    @status, @data = reservations_service.availability_reservations(**options)
+  end
+
   private
 
   def set_status(object)
@@ -50,6 +62,10 @@ class Api::V1::Customers::ReservationsController < ApplicationController
   end
 
   def index_reservation_params
-    params.permit(:id, :date)
+    params.permit(:court_id, :date, :canceled)
+  end
+
+  def availability_reservation_params
+    params.permit(:date, :start_time, :end_time, :court_id, :court_type)
   end
 end

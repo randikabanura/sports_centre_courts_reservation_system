@@ -6,6 +6,7 @@ json.data do
       json.id reservation.id
       json.start_time reservation.start_time
       json.end_time reservation.end_time
+      json.court_id reservation.court_id
       json.canceled reservation.canceled
       json.notes reservation.notes
       json.created_at reservation.created_at

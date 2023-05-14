@@ -10,6 +10,6 @@ class V1::Customers::CourtsService
   end
 
   def get_courts(**options)
-    Court.all
+    Court.active
   end
 end

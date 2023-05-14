@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   namespace :api, constraints: { format: 'json' } do
     namespace :v1 do
       namespace :customers do
-        resources :reservations, only: [:index, :show, :create, :destroy, :update]
+        resources :reservations, only: [:index, :show, :create, :destroy, :update] do
+          get 'availability', on: :collection
+        end
         resources :courts, only: [:index, :show]
       end
     end
