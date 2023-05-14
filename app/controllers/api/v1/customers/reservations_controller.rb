@@ -5,13 +5,14 @@ class Api::V1::Customers::ReservationsController < ApplicationController
     reservations_service = V1::Customers::ReservationsService.new(court_id: index_reservation_params[:court_id])
     @reservations = reservations_service.get_reservations(date: index_reservation_params[:date],
                                                           canceled: index_reservation_params[:canceled])
-    set_status(@reservations)
+    set_status(true)
   end
 
   def create
     start_time = create_reservation_params[:start_time]
     reservations_service = V1::Customers::ReservationsService.new(court_id: create_reservation_params[:court_id])
     @status, @data = reservations_service.create_reservation(start_time)
+    set_status(@status)
   end
 
   def update
@@ -21,11 +22,13 @@ class Api::V1::Customers::ReservationsController < ApplicationController
 
     reservations_service = V1::Customers::ReservationsService.new(court_id: update_reservation_params[:court_id])
     @status, @data = reservations_service.update_reservation(id, start_time, notes)
+    set_status(@status)
   end
 
   def show
     reservations_service = V1::Customers::ReservationsService.new
     @status, @data = reservations_service.get_reservation(params[:id])
+    set_status(@status)
   end
 
   def destroy
@@ -33,6 +36,7 @@ class Api::V1::Customers::ReservationsController < ApplicationController
 
     reservations_service = V1::Customers::ReservationsService.new
     @status, @data = reservations_service.cancel_reservation(id)
+    set_status(@status)
   end
 
   def availability
@@ -45,12 +49,13 @@ class Api::V1::Customers::ReservationsController < ApplicationController
 
     reservations_service = V1::Customers::ReservationsService.new(court_id: availability_reservation_params[:court_id])
     @status, @data = reservations_service.availability_reservations(**options)
+    set_status(@status)
   end
 
   private
 
-  def set_status(object)
-    @status = object.present? ? true : false
+  def set_status(status)
+    render status: status ?  :ok : :bad_request
   end
 
   def create_reservation_params

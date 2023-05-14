@@ -5,12 +5,13 @@ class Api::V1::Customers::CourtsController < ApplicationController
   def show
     @date = params[:date] || DateTime.now
     @status, @data = @courts_service.get_court(params[:id])
+    set_status(@status)
   end
 
   def index
     @date = params[:date] || DateTime.now
     @courts = @courts_service.get_courts
-    set_status(@courts)
+    set_status(true)
   end
 
   private
@@ -19,7 +20,7 @@ class Api::V1::Customers::CourtsController < ApplicationController
     @courts_service = V1::Customers::CourtsService.new
   end
 
-  def set_status(object)
-    @status = object.present? ? true : false
+  def set_status(status)
+    render status: status ?  :ok : :bad_request
   end
 end
