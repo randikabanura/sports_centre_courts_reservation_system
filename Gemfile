@@ -13,7 +13,7 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-# gem "jbuilder"
+gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -50,3 +50,5 @@ end
 gem "devise"
 gem "devise_token_auth"
 gem "rswag"
+gem "humanize", "~> 2.5"
+gem "faker", "~> 3.2"
