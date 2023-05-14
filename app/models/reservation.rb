@@ -7,7 +7,7 @@ class Reservation < ApplicationRecord
 
   def already_reserved?
     reservation_service = V1::Customers::ReservationsService.new(court_id: court.id)
-    if reservation_service.already_reserved?(start_time)
+    if reservation_service.already_reserved?(id, start_time)
       errors.add(:start_time)
     end
   end
