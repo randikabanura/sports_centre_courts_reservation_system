@@ -4,8 +4,7 @@ class Api::V1::Customers::CourtsController < ApplicationController
 
   def show
     @date = params[:date] || DateTime.now
-    @court = @courts_service.get_a_court(params[:id])
-    set_status(@court)
+    @status, @data = @courts_service.get_court(params[:id])
   end
 
   def index
