@@ -215,13 +215,16 @@ $ rails s
 After server has been started you can go the [localhost:3000](http://localhost:3000) to interact with the application.
 Before running the server make sure above steps has been completed successfully.
 
-## License
-
-Sports Center Courts Reservation System is released under the [MIT License](https://opensource.org/licenses/MIT).
-
-## Developer
+## Author
 
 Name: [Banura Randika Perera](https://github.com/randikabanura) <br/>
 Linkedin: [randika-banura](https://www.linkedin.com/in/randika-banura/) <br/>
 Email: [randika.banura@gamil.com](mailto:randika.banura@gamil.com) <br/>
-Bsc (Hons) Information Technology specialized in Software Engineering (SLIIT) <br/>
+
+## Show your support
+
+Please ⭐️ this repository if this project helped you!
+
+## License
+
+See [LICENSE](LICENSE) © [randikabanura](https://github.com/randikabanura/)
