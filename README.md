@@ -29,20 +29,20 @@ Follow the download link, and run the resulting installer. This is an exe file r
 It's a very small package, and you'll get RubyGems as well along with this package.
 Please check the Release Notes for more detail.
 
-*Note: Please use ruby version 2.7.1 for this application.*
+*Note: Please use ruby version 3.1.3 for this application.*
 
 #### Install Rails
 
 With Rubygems loaded, you can install all of Rails and its dependencies using the following command through the command line:
 
-*Note: Please use rails version 6.0.3 for this application.*
+*Note: Please use rails version 7.0.4 for this application.*
 
 ```
 > gem install rails
 > rails -v
 
 # output
-> Rails 6.0.3
+> Rails 7.0.4
 ```
 #### Database Install
 
@@ -95,16 +95,16 @@ $ exec $SHELL
 Before installing Ruby, determine which version of Ruby you want to install. We will install Ruby 2.7.1.
 Use the following command for installing Ruby.
 
-*Note: Please use ruby version 2.7.1 for this application.*
+*Note: Please use ruby version 3.1.3 for this application.*
 
 ```
-$ rbenv install -v 2.7.1
+$ rbenv install -v 3.1.3
 
-$ rbenv global 2.2.3
+$ rbenv global 3.1.3
 $ ruby -v
 
 # output
-$ ruby 2.7.1p83 (2020-03-31 revision a0c7c23c9c) [x86_64-linux]
+$ ruby 3.1.3p185 (2022-11-24 revision 1a6b16756e) [x86_64-darwin21]
 ```
 
 Ruby provides a keyword gem for installing the supported dependencies; we call them gems.
@@ -119,15 +119,15 @@ $ gem install bundler
 
 Use the following command for installing Rails version 6.0.3.
 
-*Note: Please use rails version 6.0.3 for this application.*
+*Note: Please use rails version 7.0.4 for this application.*
 
 ```
-$ install rails -v 6.0.3
+$ install rails -v 7.0.4
 $ rbenv rehash
 $ rails -v
 
 # output
-$ Rails 6.0.3
+$ Rails 7.0.4
 ```
 
 #### Install JavaScript Runtime
